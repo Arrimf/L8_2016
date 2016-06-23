@@ -77,6 +77,11 @@ std::ostream& operator<<(std::ostream& os, const  Point& poi) {
 	return	os << "Point: x=" << poi.m_x << ",  y=" << poi.m_y;
 }
 
+std::ostream & operator<<(std::ostream &os, const Point* poi)
+{
+	 return os << "Point: x=" << *poi/* << ",  y=" << *poi.m_y*/;
+}
+
 //std::ofstream& operator<<(std::ofstream& os, const Point& poi) {
 //	os << poi.m_x << " " << poi.m_y;
 //	return	os;

@@ -35,6 +35,8 @@ public:
 
 	bool operator==(const Point&)const;
 	friend std::ostream& operator<<(std::ostream&, const Point&);
+	friend std::ostream& operator<<(std::ostream&, const Point*);
+	//inline Point& operator*(Point*poi) { return *poi; };
 	//friend std::ofstream& operator<< (std::ofstream&, const Point&);
 
 };
