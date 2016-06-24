@@ -29,7 +29,6 @@ void Swap(MyString&);
  MyString& operator= (char*&&);
  friend std::ostream& operator<< (std::ostream&, const MyString&);
  friend std::ostream& operator<< (std::ostream&, const MyString*);
- 
  MyString& operator+= (const MyString&);
  MyString operator+ (const MyString&)const;
  inline const char* operator*(MyString&) { return m_pStr; }
