@@ -4,6 +4,7 @@
 #include <tchar.h>
 #include <iostream>
 #include <vector>
+#include <iterator>
 #include "myString.h"
 #include "Shape.h"
 #include "Point.h"
@@ -179,12 +180,13 @@ int _tmain(int argc, _TCHAR* argv[])
 		
 
 		
-		//{
-		//vector<int> v(3,5);
-		//v.resize(4,10); //значения? {5,5,5,10}
-		//v.resize(5); //значения? {5,5,5,10,0}
+		{
+		vector<int> v(3,5);
+		v.resize(4,10); //значения? {5,5,5,10}
+		v.resize(5); //значения? {5,5,5,10,0}
+		//Print(v);
 		//_SP
-		//}
+		}
 		
 
 	//Создайте два "пустых" вектора с элементами
@@ -196,17 +198,17 @@ int _tmain(int argc, _TCHAR* argv[])
 	//Сравните размер, емкость векторов и значения элементов
 
 
-	//vector<void*>/*<typename T>*/ v1(5);
-	//vector<void*>/*<typename T>*/ v2;
-	/////*MyString mStr= "qwe";
-	////MyString* pmStr = &mStr;*/
+	vector<void*> v1(5);
+	vector<void*> v2;
+	///*MyString mStr= "qwe";
+	//MyString* pmStr = &mStr;*/
 
-	//for (int i = 0;i < 5;i++) {
-	//	v1.push_back(static_cast<void*>(&MyString("qwe")));
-	//	v2.push_back(static_cast<void*>(&MyString("qwe")));
-	//}
-
-	//_SP
+	for (int i = 0;i < 5;i++) {
+		v1.push_back(static_cast<void*>(new MyString("qwe")));
+		v2.push_back(static_cast<void*>(new MyString("qwe")));
+	}
+	PrintVoid(v2, MyString());
+	_SP
 
 
 
@@ -220,11 +222,19 @@ int _tmain(int argc, _TCHAR* argv[])
 	//...
 	//Распечатайте содержимое такого двухмерного вектора по строкам
 	
-	int ar[] = { 11,2,4,3,5 };
+	 int ar[] = { 11,2,4,3,5 };
 
-	//auto it = ar[].begin();
+	 //ar::iterator<int> it ;
+	//it = &ar;
 
- 	 stop
+	 //vector<vector< int>> vv(sizeof(ar)/sizeof(int), vector<int>(*ar,*ar));
+	 vector<vector< int>> vv((ar),(ar+5));       ////////////////////////////////////////////// печаль =((
+	 //for (size_t i = 0; i < sizeof(ar)/sizeof(int); i++)	 {
+
+		// vv[i][0]=ar[i];
+	 //}
+	//Print(vv[0]);
+ 	// stop
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
@@ -233,7 +243,13 @@ int _tmain(int argc, _TCHAR* argv[])
 	//условии, что в векторе такого еще нет.
 
 
-	
+	 vector<char> vChar2;
+	 //vChar2::value_type;
+		 vector<char>::iterator it_e = vChar2.end();
+
+		// *it_e='P';
+
+
 	//Вставьте перед каждым элементом вектора vChar2 букву 'W'
 	
 

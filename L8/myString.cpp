@@ -45,14 +45,16 @@ MyString::~MyString() {
 
 //////////////////////////////////////
 const char* MyString::GetString () const{
-	//if (m_pStr) {
+	if (this) {
 		return m_pStr;
-	//}
+	}
+	else { return nullptr; }
 }
 const char* MyString::GetString(){
-	//if (m_pStr) {
+	if (this) {
 		return m_pStr;
-	//}
+	}
+	else { return nullptr; }
 }
 void MyString::SetNewString(const char* str) {
 	delete[] m_pStr;
@@ -144,6 +146,9 @@ ostream& operator<< (ostream& os, const MyString& mStr) {
 		os << mStr.GetString();
 	}
 	return os;
+}
+std::ostream & operator<<(std::ostream& os, const MyString* pStr){
+	return os << *pStr;
 }
 MyString& MyString::operator+= (const MyString& other) {
 	this->AddString(other.m_pStr);
