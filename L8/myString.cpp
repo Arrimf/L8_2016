@@ -145,6 +145,10 @@ ostream& operator<< (ostream& os, const MyString& mStr) {
 	}
 	return os;
 }
+std::ostream & operator<<(std::ostream &os, const MyString *str)
+{
+	return os << *str;
+}
 MyString& MyString::operator+= (const MyString& other) {
 	this->AddString(other.m_pStr);
 	return *this;

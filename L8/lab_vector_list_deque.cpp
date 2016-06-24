@@ -196,17 +196,20 @@ int _tmain(int argc, _TCHAR* argv[])
 	//Сравните размер, емкость векторов и значения элементов
 
 
-	//vector<void*>/*<typename T>*/ v1(5);
-	//vector<void*>/*<typename T>*/ v2;
-	/////*MyString mStr= "qwe";
-	////MyString* pmStr = &mStr;*/
+	vector<void*>/*<typename T>*/ v1(5);
+	vector<void*>/*<typename T>*/ v2;
+	///*MyString mStr= "qwe";
+	//MyString* pmStr = &mStr;*/
 
-	//for (int i = 0;i < 5;i++) {
-	//	v1.push_back(static_cast<void*>(&MyString("qwe")));
-	//	v2.push_back(static_cast<void*>(&MyString("qwe")));
-	//}
+	for (int i = 0;i < 5;i++) {
+		v1.push_back(static_cast<void*>(&MyString("qwe")));
+		v2.push_back(static_cast<void*>(&MyString("qwe")));
+		Print(v1);
+		_SP
 
-	//_SP
+	}
+
+	_SP
 
 
 
