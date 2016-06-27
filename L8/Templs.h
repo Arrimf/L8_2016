@@ -44,7 +44,7 @@ void PrintVoid(const T& obj ) {
 	auto it = obj.begin();
 	int size = obj.size();
 	for (int i = 0; i < size; i++) {
-		std::cout << static_cast<P*>(*it)<<std::endl;
+		std::cout << /*static_cast<P*>*/(*it)<<std::endl;
 		++it;
 	}
 	
@@ -98,13 +98,17 @@ template<typename C, typename T>
 	template<typename K>
 	void DeleteSeqs(K& container) {
 		auto it_b = container.begin();
-		auto it_e = --container.end();
+		auto it_e = container.end();
 
 		while (it_b != it_e) {
-			auto itTmp = it_b;
-			if (DefineSeq(itTmp)) {
-				it_b = container.erase(it_b, itTmp);
-				it_e = --container.end();
+			auto itTmp = std::next(it_b);
+			
+			while ((itTmp != it_e)&&(*it_b == *itTmp)){
+				++itTmp;
+			}
+			if (it_b != --itTmp) {
+				it_b = container.erase(it_b, ++itTmp);
+				it_e = container.end();
 			}
 			else {
 				++it_b;
@@ -119,21 +123,22 @@ template<typename C, typename T>
 	template<typename K>
 	void DeleteTwicy(K& container) {
 		auto it_val = container.begin();
-		auto it_e_1 = --container.end() ;
+		auto it_e = container.end();
+		
 
-		while (it_val != it_e_1) {
+		while (it_val != it_e) {
 			auto it_runner = std::next(it_val);
-			auto it_e = container.end();
+			
 			while (it_runner != it_e) {
 				if (*it_val == *it_runner) {
 					it_runner = container.erase(it_runner);
 					it_e = container.end();
-					it_e_1 = std::prev(it_e);
-				}
+					}
 				else{
 					++it_runner;
 				}
 			}
+			
 		 ++it_val;
 		}
 	}

@@ -16,7 +16,6 @@ MyString(const MyString& n_str);
 MyString(MyString&& n_str);
 const char* GetString()const;
 const char* GetString();
-char* GetSetString();
 void SetNewString(const char* str);
 void AddString(const char* str);
 friend MyString concat(const char*, ...);// !! посл.аргумент - 0

@@ -3,15 +3,17 @@
 	//Итераторы
 #include <tchar.h>
 #include <iostream>
+#include <string>
 #include <vector>
 #include <list>
+#include <deque>
 #include <iterator>
 #include "myString.h"
 #include "Shape.h"
 #include "Point.h"
 #include "Templs.h"
 #include <ctime>
-//#include <>
+#include <algorithm>
 
 
 //#pragma warning(disable: 4786)
@@ -359,49 +361,81 @@ int _tmain(int argc, _TCHAR* argv[])
 	//ЛЮБОГО КОНТЕЙНЕРА на печать. Проверьте работу шаблона на контейнерах
 	//vector и list. Подсказка - хотелось бы увидеть тип контейнера.
 
-		PrintStat(ptList1);
-		Print(ptList1);
-		_SP
+		//PrintStat(ptList1);
+		//Print(ptList1);
+		//_SP
 
 			//Сделайте любой из списков "реверсивным" - reverse()
-			reverse(ptList1.begin(),ptList1.end());
-		Print(ptList1);
-		_SP
-	//Создайте список ptList2 из элементов Point таким образом, чтобы он стал 
-	//копией вектора элементов типа Point, но значения элементов списка располагались
-	//бы в обратном порядке (используйте при конструировании реверсивные итераторы)
+		//reverse(ptList1.begin(),ptList1.end());
+		//Print(ptList1);
+			//_SP
+			//Создайте список ptList2 из элементов Point таким образом, чтобы он стал 
+			//копией вектора элементов типа Point, но значения элементов списка располагались
+			//бы в обратном порядке (используйте при конструировании реверсивные итераторы)
+
+			list<Point> ptList2(ptList1.rbegin(), ptList1.rend());
+		//Print(ptList2);
+		//_SP
+
+
+
+
 
 
 
 	//Отсортируйте списки  ptList1 и ptList2 - методом класса list - sort()
 	//по возрастанию.
 	//Подумайте: что должно быть перегружено в классе Point для того, чтобы
-	//работала сортировка
+	//работала сортировка - operator<
 
 
 	
+		ptList1.sort();
+		ptList2.sort();
+	//	Print(ptList1);
+		//_SP
 
+			stop
 
-	stop
+			//Объедините отсортированные списки - merge(). Посмотрите: что
+			//при этом происходит с каждым списком.
 
-	//Объедините отсортированные списки - merge(). Посмотрите: что
-	//при этом происходит с каждым списком.
+			list<Point> sortesP(ptList1.size() + ptList2.size());
 
-	
-	stop
+		merge(ptList1.begin(), ptList1.end(), ptList2.begin(), ptList2.end(),sortesP.begin());
+		//Print(sortesP);
+		//_SP
 
-	//Исключение элемента из списка - remove()
-	//Исключите из списка элемент с определенным значением.
-	//Подумайте: что должно быть перегружено в классе Point?
-	
+			stop
+			//DeleteTwicy(sortesP);
+		//Print(sortesP);
+		//_SP
+
+			//Исключение элемента из списка - remove()
+			//Исключите из списка элемент с определенным значением.
+			//Подумайте: что должно быть перегружено в классе Point?
+			//Print(sortesP);
+			//_SP
+			sortesP.erase(remove(sortesP.begin(), sortesP.end(), Point(2, 2)), sortesP.end());
+
+			//Print(sortesP);
+			//_SP
 
 	//Исключение элемента из списка, удовлетворяющего заданному условию:
-	//любая из координат отрицательна - remove_if(). 
+	//любая из координат отрицательна - remove_if().
+
+				//sortesP.erase(remove_if(sortesP.begin(), sortesP.end(), 
+			//			[](Point obj) {return ((obj.GetX() < 3) || (obj.GetY() < 3));}), sortesP.end());
+			//Print(sortesP);
+			//_SP
 
 
-	//Исключение из списка подряд расположенных дублей - unique(). 
-
-	stop
+	//Исключение из списка подряд расположенных дублей - unique().
+			//DeleteSeqs(sortesP);
+			//PrintStat(sortesP);
+			//Print(sortesP);
+			//_SP
+	
 
 ///////////////////////////////////////////////////////////////////
 	//Задание 2.Очередь с двумя концами - контейнер deque
@@ -411,13 +445,34 @@ int _tmain(int argc, _TCHAR* argv[])
 	//разработанного Вами в предыдущем задании универсального шаблона
 	//выведите значения элементов на печать
 
+			deque<Point> deqPo;
+			deqPo.assign(sortesP.begin(), sortesP.end());
+		//	Print(deqPo);
+		//	_SP
 
 
-	//Создайте deque с элементами типа MyString. Заполните его значениями
-	//с помощью push_back(), push_front(), insert()
-	//С помощью erase удалите из deque все элементы, в которых строчки
-	//начинаются с 'A' или 'a'
+		//Создайте deque с элементами типа MyString. Заполните его значениями
+		//с помощью push_back(), push_front(), insert()
+		//С помощью erase удалите из deque все элементы, в которых строчки
+		//начинаются с 'A' или 'a'
 
+				deque<MyString> deqStr;
+			deqStr.push_back("a privet");
+			deqStr.push_back("ku-ku");
+			deqStr.push_back("BOOO");
+			deqStr.push_front("A, neznau");
+			deqStr.push_front("chashechka");
+			deque<MyString>::iterator itD = deqStr.begin();
+			++itD;
+			deqStr.insert(itD, "uuuuu");
+			Print(deqStr);
+			_SP
+
+				deqStr.erase(remove_if(deqStr.begin(), deqStr.end(),
+					[](MyString obj) {return (!strncmp((obj.GetString()), "A",1) || !strncmp((obj.GetString()), "a",1));}),
+							deqStr.end());
+			Print(deqStr);
+			_SP
 
 
 

@@ -56,6 +56,7 @@ const char* MyString::GetString(){
 	}
 	else { return nullptr; }
 }
+
 void MyString::SetNewString(const char* str) {
 	delete[] m_pStr;
 	if (str) {
@@ -64,11 +65,7 @@ void MyString::SetNewString(const char* str) {
 	}
 	else { m_pStr = nullptr; }
 }
-char* MyString::GetSetString() {
-	if (m_pStr) {
-		return m_pStr;
-	}
-}
+
 void MyString::AddString(const char* str) {
 	if (str) {
 	char*tmp = new char[strlen(m_pStr) + strlen(str)+1];

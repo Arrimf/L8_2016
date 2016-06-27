@@ -69,6 +69,9 @@ Point Point::operator-() {
 Point Point::operator+() {
 	return *this;
 }
+bool Point::operator<(Point &other)const{
+	return (OffsetZ() < other.OffsetZ());
+}
 bool Point::operator==(const Point & other)const {
 	return ((m_x == other.m_x) && (m_y == other.m_y));
 }

@@ -16,6 +16,8 @@ class Point {
 
 public:
 	friend double Distance(const Point&, const Point&);
+	inline const double GetX()const { return m_x; }
+	inline const double GetY()const { return m_y; }
 	double OffsetZ()const;
 	explicit Point(double = 0, double = 0);
 	Point(const Point&) = default;
@@ -32,6 +34,7 @@ public:
 	Point operator+ (const Point&)const;
 	Point operator- ();
 	Point operator+ ();
+	bool operator< (Point&)const;
 
 	bool operator==(const Point&)const;
 	friend std::ostream& operator<<(std::ostream&, const Point&);
