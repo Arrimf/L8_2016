@@ -207,8 +207,8 @@ int _tmain(int argc, _TCHAR* argv[])
 		v1.push_back(static_cast<void*>(new MyString("qwe")));
 		v2.push_back(static_cast<void*>(new MyString("qwe")));
 	}
-	PrintVoid(v2, MyString());
-	_SP
+	//PrintVoid(v2, MyString());
+	//_SP
 
 
 
@@ -243,32 +243,82 @@ int _tmain(int argc, _TCHAR* argv[])
 	//условии, что в векторе такого еще нет.
 
 
-	 vector<char> vChar2;
+	 vector<char> vChar2(2,'T');
 	 //vChar2::value_type;
+		 //vector<char>::iterator it_e = vChar2.end();
+		 Insert_if_absent(vChar2, 'Q');
+		 Insert_if_absent(vChar2, 'Q');
+		 Print(vChar2);
+	//	 _SP
+			 // *it_e='P';
+
+
+		 //Вставьте перед каждым элементом вектора vChar2 букву 'W'
+
+		 vector<char>::iterator it_b = vChar2.begin();
 		 vector<char>::iterator it_e = vChar2.end();
 
-		// *it_e='P';
-
-
-	//Вставьте перед каждым элементом вектора vChar2 букву 'W'
+		while (it_b != it_e){
+			it_b = vChar2.insert(it_b, 'W');
+				++it_b;
+				++it_b;
+				it_e = vChar2.end();
+		}
+		//_SP;
 	
-
 
 
 	//Сотрите только повторяющиеся последовательности символов.
 	//Например: было - "qwerrrrty", стало - "qwety"
 
+		vChar2.clear();
+		vChar2.push_back('q');
+		vChar2.push_back('w');
+		vChar2.push_back('e');
+		vChar2.push_back('r');
+		vChar2.push_back('r');
+		vChar2.push_back('r');
+		vChar2.push_back('r');
+		vChar2.push_back('t');
+		vChar2.push_back('y');
+		//Print(vChar2);
+		//_SP
+
+		it_b = vChar2.begin();
+		//auto it_run = vChar2.begin();
+		//++it_run;
+		it_e = vChar2.end()-1;
 
 
+		while (it_b!=it_e){
+			if ( int i = DefineSeq(it_b)) {
+				auto it_tmp = it_b - 1;
+				vChar2.erase(it_b, it_b + i);
+				it_b = ++it_tmp;
+				//it_e -= i;
+				it_e = vChar2.end()-1;
+			}
+			else{
+				++it_b;
+			}
 
-	stop
+		}
+		//Print(vChar2);
+		//_SP
+		vChar2.push_back('q');
+		vChar2.push_back('w');
+		vChar2.push_back('e');
+		//vChar2.clear();
 
-///////////////////////////////////////////////////////////////////
+		stop
 
-	//Удаление элемента последовательности erase()
-	//Напишите функцию удаления из любого вектора всех дублей 
+			///////////////////////////////////////////////////////////////////
 
+				//Удаление элемента последовательности erase()
+				//Напишите функцию удаления из любого вектора всех дублей 
 
+			DeleteTwicy(vChar2);
+		_SP
 
 	//Уберите лишние пробелы в vector<char>
 

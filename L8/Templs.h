@@ -48,11 +48,25 @@ void PrintVoid( T& obj, P& ) {
 	//	<< obj.max_size() << std::endl;
 
 }
+template<typename It, typename V>
+bool FindVal2(It& beg, It& en, V& val) {
+	if (typeid(val) == typeid(*beg)) {
+		++beg;
+		while (beg != en) {
+			if (*beg == val) {
+				return true;
+			}
+			else { ++beg; }
+		}
+	}
+	return false;
+}
+
 template<typename C, typename T>
 	bool FindVal(C& container, T& val) {
-		if (typeid(val) == typeid(*container)) {
+		if (typeid(val) == typeid(C::value_type)) {   ////////?????
 			auto it_b = container.begin();
-			auto it_e = container.end()
+			auto it_e = container.end();
 				while (it_b != it_e) {
 					if (*it_b == val) {
 						return true;
@@ -62,12 +76,56 @@ template<typename C, typename T>
 		}
 	return false;
 }
+	template<typename C, typename T>
+	int FindDelAll(C& container, T val) {   //// && - ?
+		int cnt = 0;
+		if (typeid(val) == typeid(C::value_type)) {   ////////?????
+			auto it_b = container.begin() + 1;
+			auto it_e = container.end();
+			while (it_b != it_e) {
+				if (*it_b == val) {
+					auto tmp = it_b - 1;
+					container.erase(it_b);
+					it_b = ++tmp;
+					it_e = container.end();
+					cnt++;
+				}
+				else { ++it_b; }
+			}
+		}
+		return cnt;
+	}
 
-template<typename C, typename T>
-	bool Insert_if_absent(C& container, T& val) {
-		if (FindVal(container, val)) { 
+	template<typename C, typename T>
+	bool Insert_if_absent(C& container,const T& val) {   //// && - ?
+		if (FindVal(container, val)) {
 			return false;
 		}
-	container.insert(val);
-	return true;
-}
+		container.insert(container.begin(), val);
+		return true;
+	}
+
+	template<typename T>
+	int DefineSeq(T it) { /// как записать именно(исключительно) итератор?!...
+		auto tmp = it+1;
+		int cnt = 0;
+		while (*it ==*tmp){
+			++tmp;
+			++cnt;
+		}
+		if (cnt) {
+			return cnt + 1;
+		}
+		return cnt;
+	}
+	template<typename K>
+	void DeleteTwicy(K& container) {
+		auto it_b = container.begin();
+		auto it_e = container.end()-1;
+		while (it_b != it_e) {
+			FindDelAll(container, *it_b);
+			 ++it_b;
+		}
+	}
+
+
