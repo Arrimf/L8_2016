@@ -76,25 +76,6 @@ template<typename C, typename T>
 		}
 	return false;
 }
-	template<typename C, typename T>
-	int FindDelAll(C& container, T val) {   //// && - ?
-		int cnt = 0;
-		if (typeid(val) == typeid(C::value_type)) {   ////////?????
-			auto it_b = container.begin() + 1;
-			auto it_e = container.end();
-			while (it_b != it_e) {
-				if (*it_b == val) {
-					auto tmp = it_b - 1;
-					container.erase(it_b);
-					it_b = ++tmp;
-					it_e = container.end();
-					cnt++;
-				}
-				else { ++it_b; }
-			}
-		}
-		return cnt;
-	}
 
 	template<typename C, typename T>
 	bool Insert_if_absent(C& container,const T& val) {   //// && - ?
@@ -118,14 +99,42 @@ template<typename C, typename T>
 		}
 		return cnt;
 	}
+
 	template<typename K>
 	void DeleteTwicy(K& container) {
-		auto it_b = container.begin();
-		auto it_e = container.end()-1;
-		while (it_b != it_e) {
-			FindDelAll(container, *it_b);
-			 ++it_b;
+		auto it_val = container.begin();
+		auto it_e_1 = container.end() - 1;
+
+		while (it_val != it_e_1) {
+			auto it_runner = it_val + 1;
+			auto it_e = container.end();
+			while (it_runner != it_e) {
+				if (*it_val == *it_runner) {
+					auto tmp = it_runner - 1;
+					container.erase(it_runner);
+					it_runner = tmp;
+					it_e = container.end();
+					it_e_1 = it_e - 1;
+				}
+				++it_runner;
+			}
+		 ++it_val;
 		}
 	}
 
-
+	template<typename K>
+	void DelExcesSpaces(K& container) {
+		auto it_val = container.begin();
+		auto it_e_1 = container.end() - 1;
+		while (it_val != it_e_1) {
+			if (*it_val == ' ') {
+				if (int i = DefineSeq(it_val)) {
+					auto it_tmp = it_val - 1;
+					container.erase(it_val, it_val + --i);
+					it_val = it_tmp;
+					it_e_1 = container.end() - 1;
+				}
+			}
+			++it_val;
+		}
+	}
