@@ -14,30 +14,36 @@
 
 template<typename T>
 void PrintStat(const T& obj) {
-	std::cout << typeid(obj).name() << std::endl << "Size: "\
-			<< obj.size() << "  Cap: " \
-			<< obj.capacity() << "   Max_size: "\
-			<< obj.max_size() << std::endl;
-		
+	std::cout << typeid(obj).name() << std::endl << 
+		"Size: " << obj.size() << \
+		//"  Cap: " << obj.capacity() << 
+		"   Max_size: "<< obj.max_size() << std::endl;		
+}
+template<typename  T>
+void PrintVector(const std::vector<T>& obj) {
+	int size = obj.size();
+	for (int i = 0; i < size; i++){
+		std::cout << obj[i] << std::endl;
+	}
 }
 
 template<typename T>
-void Print(T& obj) {
+void Print(const T& obj) {
 
 	auto it = obj.begin();
-	while (it != obj.end())
-	{
+	int size = obj.size();
+	for (int i = 0; i < size; i++)	{
 		std::cout << *it << std::endl;
 		++it;
 	}
 }
 
 template<typename T, typename P= typename T::value_type>
-void PrintVoid( T& obj, P& ) {
+void PrintVoid(const T& obj ) {
 	
 	auto it = obj.begin();
-	while (it !=obj.end())
-	{
+	int size = obj.size();
+	for (int i = 0; i < size; i++) {
 		std::cout << static_cast<P*>(*it)<<std::endl;
 		++it;
 	}
@@ -48,19 +54,7 @@ void PrintVoid( T& obj, P& ) {
 	//	<< obj.max_size() << std::endl;
 
 }
-template<typename It, typename V>
-bool FindVal2(It& beg, It& en, V& val) {
-	if (typeid(val) == typeid(*beg)) {
-		++beg;
-		while (beg != en) {
-			if (*beg == val) {
-				return true;
-			}
-			else { ++beg; }
-		}
-	}
-	return false;
-}
+
 
 template<typename C, typename T>
 	bool FindVal(C& container, T& val) {
@@ -87,36 +81,58 @@ template<typename C, typename T>
 	}
 
 	template<typename T>
-	int DefineSeq(T it) { /// как записать именно(исключительно) итератор?!...
-		auto tmp = it+1;
-		int cnt = 0;
-		while (*it ==*tmp){
+	bool DefineSeq(T& it) { /// как записать именно(исключительно) итератор?!... - никак... =(((
+		auto tmp = it;
+		
+		do {
 			++tmp;
-			++cnt;
+		} while (*it == *tmp);
+
+		if (it == --tmp) {			
+			return  false;
 		}
-		if (cnt) {
-			return cnt + 1;
-		}
-		return cnt;
+		it = ++tmp;			//////?????
+		return true;
 	}
+
+	template<typename K>
+	void DeleteSeqs(K& container) {
+		auto it_b = container.begin();
+		auto it_e = --container.end();
+
+		while (it_b != it_e) {
+			auto itTmp = it_b;
+			if (DefineSeq(itTmp)) {
+				it_b = container.erase(it_b, itTmp);
+				it_e = --container.end();
+			}
+			else {
+				++it_b;
+			}
+		}
+	}
+	
+
+
+	
 
 	template<typename K>
 	void DeleteTwicy(K& container) {
 		auto it_val = container.begin();
-		auto it_e_1 = container.end() - 1;
+		auto it_e_1 = --container.end() ;
 
 		while (it_val != it_e_1) {
-			auto it_runner = it_val + 1;
+			auto it_runner = std::next(it_val);
 			auto it_e = container.end();
 			while (it_runner != it_e) {
 				if (*it_val == *it_runner) {
-					auto tmp = it_runner - 1;
-					container.erase(it_runner);
-					it_runner = tmp;
+					it_runner = container.erase(it_runner);
 					it_e = container.end();
-					it_e_1 = it_e - 1;
+					it_e_1 = std::prev(it_e);
 				}
-				++it_runner;
+				else{
+					++it_runner;
+				}
 			}
 		 ++it_val;
 		}
@@ -125,16 +141,25 @@ template<typename C, typename T>
 	template<typename K>
 	void DelExcesSpaces(K& container) {
 		auto it_val = container.begin();
-		auto it_e_1 = container.end() - 1;
+		auto it_e_1 = --container.end() ;
 		while (it_val != it_e_1) {
 			if (*it_val == ' ') {
-				if (int i = DefineSeq(it_val)) {
-					auto it_tmp = it_val - 1;
-					container.erase(it_val, it_val + --i);
-					it_val = it_tmp;
-					it_e_1 = container.end() - 1;
+				auto tmp = it_val;
+				if (DefineSeq(tmp)) {
+					it_val = container.erase(++it_val, tmp);
+					it_e_1 = --container.end();
 				}
 			}
 			++it_val;
+		}
+	}
+
+	template<typename K>
+	void CleanPoinerContainer(K& container) {
+		auto it_runner = container.begin();
+		auto it_e = container.end();
+		while (it_runner != it_e){
+			delete *it_runner;
+			++it_runner;
 		}
 	}

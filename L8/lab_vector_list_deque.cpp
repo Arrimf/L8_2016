@@ -4,6 +4,7 @@
 #include <tchar.h>
 #include <iostream>
 #include <vector>
+#include <list>
 #include <iterator>
 #include "myString.h"
 #include "Shape.h"
@@ -139,10 +140,10 @@ int _tmain(int argc, _TCHAR* argv[])
 	//вектор указателей на Point - vpPoint с начальным размером 5
 	//Подумайте: как корректно заставить эти указатели "указывать" на объекты Point
 	{
-		//std::vector<Point*>vpPoint(5,&Point((87. / (rand() % 10 + 1)), (87. / (rand() % 10 + 1))));
+		//std::vector<Point*>vpPoint(5,new Point((87. / (rand() % 10 + 1)), (87. / (rand() % 10 + 1))));
 		//Print(vpPoint);
 		//_SP
-
+		//CleanPoinerContainer(vpPoint);
 			
 	//Подсказка: для вывода на печать значений скорее всего Вам понадобится
 		//а) специализация Вашей шаблонной функции
@@ -204,13 +205,13 @@ int _tmain(int argc, _TCHAR* argv[])
 	//MyString* pmStr = &mStr;*/
 
 	for (int i = 0;i < 5;i++) {
-		v1.push_back(static_cast<void*>(new MyString("qwe")));
-		v2.push_back(static_cast<void*>(new MyString("qwe")));
+		v1.push_back(new MyString("qwe"));
+		v2.push_back(new MyString("qwe"));
 	}
-	//PrintVoid(v2, MyString());
+	//PrintVoid<decltype(v2), MyString>(v2);
 	//_SP
-
-
+	CleanPoinerContainer(v1);
+	CleanPoinerContainer(v2);
 
 	
 	//Создание "двухмерного вектора" - вектора векторов
@@ -248,7 +249,7 @@ int _tmain(int argc, _TCHAR* argv[])
 		 //vector<char>::iterator it_e = vChar2.end();
 		 Insert_if_absent(vChar2, 'Q');
 		 Insert_if_absent(vChar2, 'Q');
-		 Print(vChar2);
+	//	 Print(vChar2);
 	//	 _SP
 			 // *it_e='P';
 
@@ -284,25 +285,10 @@ int _tmain(int argc, _TCHAR* argv[])
 		//Print(vChar2);
 		//_SP
 
-		it_b = vChar2.begin();
-		//auto it_run = vChar2.begin();
-		//++it_run;
-		it_e = vChar2.end()-1;
 
+	
 
-		while (it_b!=it_e){
-			if ( int i = DefineSeq(it_b)) {
-				auto it_tmp = it_b - 1;
-				vChar2.erase(it_b, it_b + i);
-				it_b = ++it_tmp;
-				//it_e -= i;
-				it_e = vChar2.end()-1;
-			}
-			else{
-				++it_b;
-			}
-
-		}
+		DeleteSeqs(vChar2);
 		//Print(vChar2);
 		//_SP
 		vChar2.push_back('q');
@@ -310,7 +296,7 @@ int _tmain(int argc, _TCHAR* argv[])
 		vChar2.push_back('e');
 		//vChar2.clear();
 
-		stop
+		//stop
 
 			///////////////////////////////////////////////////////////////////
 
@@ -318,7 +304,7 @@ int _tmain(int argc, _TCHAR* argv[])
 				//Напишите функцию удаления из любого вектора всех дублей 
 
 			DeleteTwicy(vChar2);
-		//_SP
+			//_SP
 			//Print(vChar2);
 	//Уберите лишние пробелы в vector<char>
 
@@ -354,15 +340,33 @@ int _tmain(int argc, _TCHAR* argv[])
 	//его значениями с помощью методов push_back(),
 	//push_front, insert()
 	
+		list<Point>	ptList1;
+		ptList1.push_back(Point(2, 2));
+		ptList1.push_back(Point(3, 2));
+		ptList1.push_back(Point(5, 1));
+		ptList1.push_front(Point(4, 5));
+		ptList1.push_front(Point(3, 7));
+		ptList1.push_front(Point(1, 2));
+		list<Point>::iterator itLb = ptList1.begin();
+		++itLb;
+		++itLb;
+		ptList1.insert(itLb,Point(2, 3));
+
+		
+
 
 	//Напишите шаблон функции, которая будет выводить элементы
 	//ЛЮБОГО КОНТЕЙНЕРА на печать. Проверьте работу шаблона на контейнерах
 	//vector и list. Подсказка - хотелось бы увидеть тип контейнера.
 
+		PrintStat(ptList1);
+		Print(ptList1);
+		_SP
 
-	//Сделайте любой из списков "реверсивным" - reverse()
-
-
+			//Сделайте любой из списков "реверсивным" - reverse()
+			reverse(ptList1.begin(),ptList1.end());
+		Print(ptList1);
+		_SP
 	//Создайте список ptList2 из элементов Point таким образом, чтобы он стал 
 	//копией вектора элементов типа Point, но значения элементов списка располагались
 	//бы в обратном порядке (используйте при конструировании реверсивные итераторы)
