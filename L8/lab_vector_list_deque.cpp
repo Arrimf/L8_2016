@@ -232,12 +232,15 @@ int _tmain(int argc, _TCHAR* argv[])
 
 	 //vector<vector< int>> vv(sizeof(ar)/sizeof(int), vector<int>(*ar,*ar));
 	 vector<vector< int>> vv((ar),(ar+5));       ////////////////////////////////////////////// печаль =((
-	 //for (size_t i = 0; i < sizeof(ar)/sizeof(int); i++)	 {
+	 for (size_t i = 0; i < sizeof(ar)/sizeof(int); i++)	 {
+		 vector<int>::iterator itb = vv[i].begin();
+		 vector<int>::iterator ite = vv[i].end();
 
-		// vv[i][0]=ar[i];
-	 //}
-	//Print(vv[0]);
- 	// stop
+		copy(itb,ite,ar[i]);
+	 }
+	//Print(vv);
+ 	_SP
+	// stop
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
@@ -465,14 +468,15 @@ int _tmain(int argc, _TCHAR* argv[])
 			deque<MyString>::iterator itD = deqStr.begin();
 			++itD;
 			deqStr.insert(itD, "uuuuu");
-			Print(deqStr);
-			_SP
+		//	Print(deqStr);
+		//	_SP
 
-				deqStr.erase(remove_if(deqStr.begin(), deqStr.end(),
-					[](MyString obj) {return (!strncmp((obj.GetString()), "A",1) || !strncmp((obj.GetString()), "a",1));}),
-							deqStr.end());
-			Print(deqStr);
-			_SP
+				deqStr.erase(
+					remove_if(deqStr.begin(), deqStr.end(),
+						[](MyString obj) {return (!strncmp((obj.GetString()), "A",1) || !strncmp((obj.GetString()), "a",1));}),
+					deqStr.end());
+		//	Print(deqStr);
+		//	_SP
 
 
 
