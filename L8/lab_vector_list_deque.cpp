@@ -211,7 +211,7 @@ int _tmain(int argc, _TCHAR* argv[])
 		v2.push_back(new MyString("qwe"));
 	}
 	//PrintVoid<decltype(v2), MyString>(v2);
-	//_SP
+	_SP
 	CleanPoinerContainer(v1);
 	CleanPoinerContainer(v2);
 
@@ -233,13 +233,16 @@ int _tmain(int argc, _TCHAR* argv[])
 	 //vector<vector< int>> vv(sizeof(ar)/sizeof(int), vector<int>(*ar,*ar));
 	 vector<vector< int>> vv((ar),(ar+5));       ////////////////////////////////////////////// печаль =((
 	 for (size_t i = 0; i < sizeof(ar)/sizeof(int); i++)	 {
-		 vector<int>::iterator itb = vv[i].begin();
-		 vector<int>::iterator ite = vv[i].end();
+		 vector<int>::iterator itb = (vv[i]).begin();
+		 vector<int>::iterator ite = (vv[i]).end();
 
-		copy(itb,ite,ar[i]);
+		 while (itb != ite) {
+			 *itb = ar[i];
+			 ++itb;
+		 }
 	 }
 	//Print(vv);
- 	_SP
+ 	//_SP
 	// stop
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

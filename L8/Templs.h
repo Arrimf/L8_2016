@@ -44,7 +44,7 @@ void PrintVoid(const T& obj ) {
 	auto it = obj.begin();
 	int size = obj.size();
 	for (int i = 0; i < size; i++) {
-		std::cout << /*static_cast<P*>*/(*it)<<std::endl;
+		std::cout << static_cast<P*>(*it)<<std::endl;
 		++it;
 	}
 	
