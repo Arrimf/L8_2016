@@ -142,10 +142,15 @@ int _tmain(int argc, _TCHAR* argv[])
 	//вектор указателей на Point - vpPoint с начальным размером 5
 	//Подумайте: как корректно заставить эти указатели "указывать" на объекты Point
 	{
-		//std::vector<Point*>vpPoint(5,new Point((87. / (rand() % 10 + 1)), (87. / (rand() % 10 + 1))));
+		std::vector<Point*>vpPoint(5);//, 
+		int size = vpPoint.size();
+		for (int i = 0; i < size;i++) {
+		vpPoint[i] = new Point((87. / (rand() % 10 + 1)), (87. / (rand() % 10 + 1)));
+		}
+
 		//Print(vpPoint);
 		//_SP
-		//CleanPoinerContainer(vpPoint);
+		CleanPoinerContainer(vpPoint);
 			
 	//Подсказка: для вывода на печать значений скорее всего Вам понадобится
 		//а) специализация Вашей шаблонной функции
@@ -211,7 +216,7 @@ int _tmain(int argc, _TCHAR* argv[])
 		v2.push_back(new MyString("qwe"));
 	}
 	//PrintVoid<decltype(v2), MyString>(v2);
-	_SP
+	//SP
 	CleanPoinerContainer(v1);
 	CleanPoinerContainer(v2);
 
@@ -282,6 +287,7 @@ int _tmain(int argc, _TCHAR* argv[])
 
 		vChar2.clear();
 		vChar2.push_back('q');
+		vChar2.push_back('q');
 		vChar2.push_back('w');
 		vChar2.push_back('e');
 		vChar2.push_back('r');
@@ -290,15 +296,13 @@ int _tmain(int argc, _TCHAR* argv[])
 		vChar2.push_back('r');
 		vChar2.push_back('t');
 		vChar2.push_back('y');
-		//Print(vChar2);
-		//_SP
-
-
-	
-
+		vChar2.push_back('y');
+		
+		Print(vChar2);
+		
 		DeleteSeqs(vChar2);
-		//Print(vChar2);
-		//_SP
+		Print(vChar2);
+		_SP
 		vChar2.push_back('q');
 		vChar2.push_back('w');
 		vChar2.push_back('e');
@@ -471,15 +475,15 @@ int _tmain(int argc, _TCHAR* argv[])
 			deque<MyString>::iterator itD = deqStr.begin();
 			++itD;
 			deqStr.insert(itD, "uuuuu");
-		//	Print(deqStr);
-		//	_SP
+			Print(deqStr);
+			_SP
 
 				deqStr.erase(
 					remove_if(deqStr.begin(), deqStr.end(),
 						[](MyString obj) {return (!strncmp((obj.GetString()), "A",1) || !strncmp((obj.GetString()), "a",1));}),
 					deqStr.end());
-		//	Print(deqStr);
-		//	_SP
+			Print(deqStr);
+			_SP
 
 
 
